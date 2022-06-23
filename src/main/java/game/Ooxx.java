@@ -1,6 +1,8 @@
 package game;
 
+import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 
 public class Ooxx {
     public static void main(String[] args) {
@@ -11,13 +13,18 @@ public class Ooxx {
                 {'-', '+', '-', '+', '-'},
                 {' ', '|', ' ', '|', ' '}};
         printBoard(board);
-        Scanner s = new Scanner(System.in);
-        System.out.println("Enter your position between 1 ~ 9 :");
-        int position = s.nextInt();
-        System.out.println(position);
-        printBoard(board);
+        while(true){
 
-
+            Scanner s = new Scanner(System.in);
+            System.out.println("Enter your position between 1 ~ 9 :");
+            int Player_pos = s.nextInt();
+            Random r = new Random();
+            int AI_pos = r.nextInt(9)+1;
+            //System.out.println(position);
+            PosPlacer(board,Player_pos,"Player");
+            System.out.println("_______________________");
+            PosPlacer(board,Player_pos,"AI");
+        }
     }
     public static void printBoard(char[][] board){
         //冒號就是遍歷abc的集合，取出每一個元素
@@ -28,12 +35,14 @@ public class Ooxx {
             System.out.println();
         }
     }
-    public static void PosPlacer(char[][] board,int position,String user){
+    public static void PosPlacer(char[][] board,int Player_pos,String user){
         char character = 'X';
         if(user.equals("AI")){
             character = 'O';
+        }else if (user.equals("Player")){
+            character = 'X';
         }
-        switch(position){
+        switch(Player_pos){
             case 1:
                 board[0][0] = character;
                 break;
@@ -61,7 +70,6 @@ public class Ooxx {
             case 9:
                 board[4][4] = character;
                 break;
-
         }
         printBoard(board);
     }
